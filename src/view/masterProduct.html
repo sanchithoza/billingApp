@@ -1,0 +1,54 @@
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>BillingApp</title>
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" href="./../css/bootstrap.min.css" />
+</head>
+
+<body>
+    <div class="card">
+        <div class="card-header">Add New Product</div>
+        <div class="card-body">
+
+            <from>
+                <div class="form-group">
+                    <label for="usr">Type / Name:</label>
+                    <input type="text" name="type" class="form-control" id="type" />
+                </div>
+                <div class="form-group">
+                    <label for="grade">Grade:</label>
+                    <input type="text" name="grade" class="form-control" id="grade" />
+                </div>
+                <div class="form-group">
+                    <label for="grade">Size:</label>
+                    <input type="text" name="size" class="form-control" id="size" />
+                </div>
+                <div class="form-group">
+                    <label for="rate">Rate:</label>
+                    <input type="text" name="rate" class="form-control" id="rate" />
+                </div>
+                <div class="form-group">
+                    <label for="mrp">MRP:</label>
+                    <input type="text" name="mrp" class="form-control" id="mrp" />
+                </div>
+                <div class="form-group">
+                    <button type="button" name="submit" id="submit" class="btn btn-info">
+            Submit
+          </button>
+                </div>
+            </from>
+        </div>
+    </div>
+    </div>
+    <br /><span id="result"></span>
+    <table id="record"></table>
+</body>
+<script type="text/javascript" src="./../js/jquery-3.5.1.js"></script>
+
+<script type="text/javascript" src="./../js/masterProduct.js"></script>
+<script type="text/javascript" src="./../js/bootstrap.min.js"></script>
+
+</html>

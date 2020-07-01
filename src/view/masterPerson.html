@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>BillingApp - Person Master</title>
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" href="./../css/bootstrap.min.css" />
+    <script type="text/javascript" src="./../js/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="./../js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="card">
+        <div class="card-header">Add New Person</div>
+        <div class="card-body">
+            <from><br />
+                <div class="form-group">
+                    <label for="type">Type:</label>
+                    <input type="text" name="type" class="form-control" id="type" />
+                </div>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" name="partyName" class="form-control" id="partyName" />
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" name="address" class="form-control" id="address" />
+                </div>
+                <div class="form-group">
+                    <label for="state">State:</label>
+                    <input type="text" name="state" class="form-control" id="state" />
+                </div>
+                <div class="form-group">
+                    <label for="gst">GST No:</label>
+                    <input type="text" name="gst" class="form-control" id="gst" />
+                </div>
+                <div class="form-group">
+                    <label for="pan">PAN No:</label>
+                    <input type="text" name="pan" class="form-control" id="pan" />
+                </div>
+                <div class="form-group">
+                    <button type="button" name="submit" id="submit" class="btn btn-info">
+                Submit
+              </button>
+                </div>
+            </from>
+        </div>
+
+    </div>
+
+    <br /><span id="result"></span>
+    <table id="record"></table>
+</body>
+
+
+<script type="text/javascript" src="./../js/masterPerson.js"></script>
+
+</html>
