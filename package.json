@@ -1,27 +1,27 @@
 {
-  "name": "billing",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "rebuild": "electron-rebuild -f -w sqlite3",
-    "postinstall": "electron-builder install-app-deps",
-    "package-win": "electron-packager . billing --overwrite --asar=true --platform=win32 --arch=x64 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"billing\""
-  },
-  "author": "Sanchit Oza",
-  "license": "ISC",
-  "dependencies": {
-    "electron": "^9.0.5",
-    "jquery": "^3.5.1",
-    "sqlite3": "^4.2.0"
-  },
-  "devDependencies": {
-    "asar": "^3.0.3",
-    "electron-builder": "^22.7.0",
-    "electron-packager": "^15.0.0",
-    "electron-rebuild": "^1.11.0",
-    "electron-winstaller": "^4.0.0",
-    "gulp": "^4.0.2"
-  }
+    "name": "billing",
+    "version": "1.0.0",
+    "description": "billing app for small scale business",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "rebuild": "electron-rebuild -f -w sqlite3",
+        "postinstall": "electron-builder install-app-deps",
+        "package-win": "electron-packager . billing --overwrite --asar=true --platform=win32 --arch=x64 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"billing\""
+    },
+    "author": "Sanchit Oza",
+    "license": "ISC",
+    "dependencies": {
+        "electron": "^9.0.5",
+        "jquery": "^3.5.1",
+        "sqlite3": "^4.2.0"
+    },
+    "devDependencies": {
+        "asar": "^3.0.3",
+        "electron-builder": "^22.7.0",
+        "electron-packager": "^15.0.0",
+        "electron-rebuild": "^1.11.0",
+        "electron-winstaller": "^4.0.0",
+        "gulp": "^4.0.2"
+    }
 }
