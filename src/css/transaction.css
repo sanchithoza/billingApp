@@ -1,0 +1,7 @@
+.table tbody tr td {
+    padding: 0px;
+}
+
+#total td {
+    border: 1px solid black
+}

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello World!</title>
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" href="./../css/dropdown.css" />
+    <link rel="stylesheet" href="./../css/transaction.css" />
+    <link rel="stylesheet" href="./../css/bootstrap.min.css" />
+
+</head>
+
+<body>
+    <from>
+        <div class="card">
+            <div class="card-header" id="transactionHeader"></div>
+            <div class="card-body">
+
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="name">Party Name:</label>
+                        <input list="partyList" name="partyName" id="selectedParty" class="form-control">
+                        <datalist id="partyList">
+                            <option value="">
+ 
+                        </datalist>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="date">Date:</label>
+                        <input type="date" name="transdate" class="form-control" id="transdate" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card col-md-9">
+                        <div class="card-header" id="">Product List</div>
+                        <div class="card-body">
+                            <table class="table" id="billItems">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Size</th>
+                                        <th>Grade</th>
+                                        <th>Qty</th>
+                                        <th>Rate</th>
+                                        <th>MRP</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="form-group">
+                                                <input list="productList" name="productName" id="selectedName" class="form-control">
+                                                <datalist id="productList">
+                                                 <option value="">
+ 
+                                            </datalist>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input list="productList" name="productName" id="selectedType" class="form-control">
+                                                <datalist id="productList">
+                                                 <option value="">
+ 
+                                            </datalist>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input list="productList" name="productName" id="selectedSize" class="form-control">
+                                                <datalist id="productList">
+                                                 <option value="">
+ 
+                                            </datalist>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input list="productList" name="productName" id="selectedGrade" class="form-control">
+                                                <datalist id="productList">
+                                                 <option value="">
+ 
+                                            </datalist>
+                                            </div>
+                                        </td>
+                                        <td><input type="text" name="tableName" class="form-control tabName" id="qty" /></td>
+                                        <td><input type="text" name="tableName" class="form-control tabName" id="rate" /></td>
+                                        <td><input type="text" name="tableName" class="form-control tabName" id="mrp" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-group">
+                                                <input list="productList" name="productName" id="selectedName" class="form-control">
+                                                <datalist id="productList">
+                                                 <option value="">
+ 
+                                            </datalist>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input list="productList" name="productName" id="selectedType" class="form-control">
+                                                <datalist id="productList">
+                                                 <option value="">
+ 
+                                            </datalist>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input list="productList" name="productName" id="selectedSize" class="form-control">
+                                                <datalist id="productList">
+                                                 <option value="">
+ 
+                                            </datalist>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input list="productList" name="productName" id="selectedGrade" class="form-control">
+                                                <datalist id="productList">
+                                                 <option value="">
+ 
+                                            </datalist>
+                                            </div>
+                                        </td>
+                                        <td><input type="text" name="tableName" class="form-control tabName" id="qty" /></td>
+                                        <td><input type="text" name="tableName" class="form-control tabName" id="rate" /></td>
+                                        <td><input type="text" name="tableName" class="form-control tabName" id="mrp" /></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card col-md-3">
+                        <div class="card-header" id="">Totals</div>
+                        <div class="card-body">
+                            <table class="table" style="text-align: center;vertical-align: middle;">
+                                <tr>
+                                    <th>Quantity</th>
+                                    <th><span id="totalQty">10</span></th>
+                                </tr>
+                                <tr>
+                                    <th>Net Amount</th>
+                                    <th><span id="namount">10</span></th>
+                                </tr>
+                                <tr>
+                                    <th>SGST</th>
+                                    <th><span id="sgst">10</span></th>
+                                </tr>
+                                <tr>
+                                    <th>CGST / IGST</th>
+                                    <th><span id="cgst">10</span></th>
+                                </tr>
+                                <tr>
+                                    <th>Gross Amount</th>
+                                    <th><span id="gamount">10</span></th>
+                                </tr>
+                            </table>
+                            <div class="form-group">
+                                <button type="button" name="submit" id="submit" class="btn btn-info">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <br /><span id="result"></span>
+        <table id="record"></table>
+    </from>
+</body>
+<script type="text/javascript" src="./../js/jquery-3.5.1.js"></script>
+
+<script type="text/javascript" src="./../js/transaction.js"></script>
+<script type="text/javascript" src="./../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./../js/dropdown.js"></script>
+
+</html>

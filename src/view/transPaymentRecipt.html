@@ -28,16 +28,16 @@
                 </div>
                 <div class="form-group">
                     <label for="name">Party Name:</label>
-                    <input type="text" name="partyName" class="form-control" id="partyName" />
-                </div>
-                <div class="dropdown">
-                    <button onclick="myFunction()" class="dropbtn">Select Party Name</button>
-                    <div id="myDropdown" class="dropdown-content">
-                        <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-                        <!--<a href="#about" onclick="selectedParty('About')">About</a>
-                            WILL BE APPENDED ON PAGELOAD EVENT
-                        -->
 
+                    <input onclick="myFunction()" type="text" name="partyName" class="form-control" id="partyName" />
+                    <div class="dropdown">
+                        <!--     <button onclick="myFunction()" class="dropbtn">Select Party Name</button>-->
+                        <div id="partyNameDropDown" class="dropdown-content">
+                            <!--<a href="#about" onclick="selectedParty('About')">About</a>
+                                WILL BE APPENDED ON PAGELOAD EVENT
+                            -->
+
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -64,5 +64,6 @@
 
 
 <script type="text/javascript" src="./../js/transPaymentRecipt.js"></script>
+<script type="text/javascript" src="./../js/dropdown.js"></script>
 
 </html>

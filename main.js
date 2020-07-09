@@ -1,21 +1,25 @@
-const { app, BrowserWindow, Menu } = require("electron");
+const electron = require("electron");
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+const Menu = electron.Menu;
 require("./src/db/config");
 //const { template } = require("./src/view/menu");
-app.allowRendererProcessReuse = false;
-
 function createWindow() {
     // Create the browser window.
     let win = new BrowserWindow({
         //width: 800,
         //height: 600,
+        show: false,
         webPreferences: {
             nodeIntegration: true,
-
         },
     });
+    win.maximize();
+
     win.webContents.openDevTools();
     // and load the index.html of the app.
     win.loadFile("src/view/index.html");
+    win.show();
     const template = [{
             label: "Home",
             click() {
@@ -60,13 +64,13 @@ function createWindow() {
             submenu: [{
                     label: "Purchase",
                     click() {
-                        win.loadFile("src/view/transPurchase.html");
+                        win.loadURL(`file://${__dirname}/src/view/transaction.html?type=Purchase`);
                     },
                 },
                 {
                     label: "Sales",
                     click() {
-                        win.loadFile("src/view/transSales.html");
+                        win.loadURL(`file://${__dirname}/src/view/transaction.html?type=Sale`);
                     },
                 },
                 {
@@ -138,9 +142,8 @@ function createWindow() {
             role: 'reload'
         }
     ];
-
     const menu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(menu);
 }
-
 app.whenReady().then(createWindow);
+app.allowRendererProcessReuse = false;

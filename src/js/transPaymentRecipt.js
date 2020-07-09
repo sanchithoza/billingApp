@@ -5,10 +5,7 @@ const db = require('../db/config');
 document.addEventListener('DOMContentLoaded', pageLoaded);
 
 function pageLoaded() {
-    db.each("SELECT * FROM person", function(err, row) {
-        console.log(row.id + ": " + JSON.stringify(row));
-        $("#myDropdown").append('<a href="#about" onclick="selectedParty(\'' + row.name + '\')">' + row.name + '</a>')
-    });
+
 
 }
 $('#submit').on('click', () => {
