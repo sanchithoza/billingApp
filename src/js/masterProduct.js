@@ -13,11 +13,8 @@ $('#submit').on('click', () => {
     let type = $('#type').val();
     let grade = $('#grade').val();
     let size = $('#size').val();
-    let rate = $('#rate').val();
-    let mrp = $('#mrp').val();
-    console.log(name);
-
-    db.run("INSERT INTO product(name,type,grade,size,rate,mrp) VALUES(?,?,?,?,?,?)", [name, type, grade, size, rate, mrp], function(err) {
+    let shade = $('#shade').val();
+    db.run("INSERT INTO product(name,type,grade,size,shade) VALUES(?,?,?,?,?)", [name, type, grade, size, shade], function(err) {
         if (err) {
             return console.log(err);
         }

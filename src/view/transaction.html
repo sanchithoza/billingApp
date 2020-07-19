@@ -29,7 +29,16 @@
                         </datalist>
                     </div>
 
-                    <div class="form-group col-md-6">
+
+                    <div class="form-group col-md-3">
+                        <label for="paymentMode">Payment Mode:</label>
+                        <select class="form-control" id="paymentMode">
+                          <option value="cash">Cash</option>
+                          <option value="credit">Credit</option>
+                          </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
                         <label for="date">Date:</label>
                         <input type="date" name="transdate" class="form-control" id="transdate" />
                     </div>
@@ -41,10 +50,12 @@
                             <table class="table" id="billItems">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Type</th>
                                         <th>Size</th>
+                                        <th>Type</th>
                                         <th>Grade</th>
+                                        <th>Name</th>
+                                        <th>Shade</th>
+                                        <th>Batch</th>
                                         <th>Qty</th>
                                         <th>Rate</th>
                                         <th>MRP</th>
@@ -54,8 +65,8 @@
                                     <tr>
                                         <td>
                                             <div class="form-group">
-                                                <input list="productList" name="productName" id="selectedName" class="form-control">
-                                                <datalist id="productList">
+                                                <input list="sizeList" name="size" id="selectedSize" class="form-control">
+                                                <datalist id="sizeList">
                                                  <option value="">
  
                                             </datalist>
@@ -63,8 +74,8 @@
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input list="productList" name="productName" id="selectedType" class="form-control">
-                                                <datalist id="productList">
+                                                <input list="typeList" name="type" id="selectedType" class="form-control">
+                                                <datalist id="typeList">
                                                  <option value="">
  
                                             </datalist>
@@ -72,8 +83,26 @@
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input list="productList" name="productName" id="selectedSize" class="form-control">
-                                                <datalist id="productList">
+                                                <input list="gradeList" name="grade" id="selectedGrade" class="form-control">
+                                                <datalist id="gradeList">
+                                                 <option value="">
+ 
+                                            </datalist>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input list="nameList" name="name" id="selectedName" class="form-control">
+                                                <datalist id="nameList">
+                                                 <option value="">
+ 
+                                            </datalist>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input list="shadeList" name="shade" id="selectedShade" class="form-control">
+                                                <datalist id="shadeList">
                                                  <option value="">
  
                                             </datalist>
@@ -144,23 +173,23 @@
                             <table class="table" style="text-align: center;vertical-align: middle;">
                                 <tr>
                                     <th>Quantity</th>
-                                    <th><span id="totalQty">10</span></th>
+                                    <th><span id="totalQty">0</span></th>
                                 </tr>
                                 <tr>
                                     <th>Net Amount</th>
-                                    <th><span id="namount">10</span></th>
+                                    <th><span id="namount">0</span></th>
                                 </tr>
                                 <tr>
                                     <th>SGST</th>
-                                    <th><span id="sgst">10</span></th>
+                                    <th><span id="sgst">0</span></th>
                                 </tr>
                                 <tr>
                                     <th>CGST / IGST</th>
-                                    <th><span id="cgst">10</span></th>
+                                    <th><span id="cgst">0</span></th>
                                 </tr>
                                 <tr>
                                     <th>Gross Amount</th>
-                                    <th><span id="gamount">10</span></th>
+                                    <th><span id="gamount">0</span></th>
                                 </tr>
                             </table>
                             <div class="form-group">

@@ -9,7 +9,7 @@ let db = new sqlite3.Database("./electron-billing.db", async(err) => {
     //creating User table
     await db.run("CREATE TABLE IF NOT EXISTS appuser (id INTEGER PRIMARY KEY,username TEXT NOT NULL,password TEXT NOT NULL)");
     //creating product master table
-    await db.run("CREATE TABLE IF NOT EXISTS product (id INTEGER PRIMARY KEY,name TEXT,type TEXT NOT NULL,grade TEXT NOT NULL,size TEXT NOT NULL,rate NUMBER NOT NULL,mrp NUMBER NOT NULL)");
+    await db.run("CREATE TABLE IF NOT EXISTS product (id INTEGER PRIMARY KEY,name TEXT,type TEXT NOT NULL,grade TEXT NOT NULL,size TEXT NOT NULL,shade TEXT)");
     //creating person master
     await db.run("CREATE TABLE IF NOT EXISTS person (id INTEGER PRIMARY KEY,type TEXT NOT NULL,name TEXT NOT NULL,address TEXT NOT NULL,state TEXT NOT NULL,gst TEXT,pan TEXT)");
     //creating transaction table
@@ -18,7 +18,8 @@ let db = new sqlite3.Database("./electron-billing.db", async(err) => {
     await db.run("CREATE TABLE IF NOT EXISTS transactionDetail (id INTEGER PRIMARY KEY,transactionId INTEGER NOT NULL,productId INTEGER NOT NULL,quantity INTEGER NOT NULL,amount NUMBER NOT NULL)");
     //creating Paymetn Recipt table
     await db.run("CREATE TABLE IF NOT EXISTS paymentRecipt (id INTEGER PRIMARY KEY,onDate DATE NOT NULL,personId INTEGER NOT NULL,amount NUMBER NOT NULL,remark TEXT)");
-
+    //creating inventory table
+    await db.run("CREATE TABLE IF NOT EXISTS inventory (id INTEGER PRIMARY KEY,productId INTEGER NOT NULL,batchNo NUMBER NOT NULL,availStock NUMBER NOT NULL,rate NUMBER,mrp NUMBER)");
 });
 
 module.exports = db;
