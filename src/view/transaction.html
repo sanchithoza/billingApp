@@ -45,11 +45,14 @@
                 </div>
                 <div class="row">
                     <div class="card col-md-9">
-                        <div class="card-header" id="">Product List</div>
+                        <div class="card-header" id="">Product List
+                            <a id="addRow">add Row</a>
+                        </div>
                         <div class="card-body">
                             <table class="table" id="billItems">
                                 <thead>
                                     <tr>
+                                        <th>PID</th>
                                         <th>Size</th>
                                         <th>Type</th>
                                         <th>Grade</th>
@@ -63,6 +66,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td> <input name="pid" id="productId" class="form-control"> </td>
                                         <td>
                                             <div class="form-group">
                                                 <input list="sizeList" name="size" id="selectedSize" class="form-control">
@@ -110,8 +114,8 @@
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input list="productList" name="productName" id="selectedGrade" class="form-control">
-                                                <datalist id="productList">
+                                                <input list="batchList" name="batch" id="selectedBatch" class="form-control">
+                                                <datalist id="batchList">
                                                  <option value="">
  
                                             </datalist>
@@ -122,10 +126,11 @@
                                         <td><input type="text" name="tableName" class="form-control tabName" id="mrp" /></td>
                                     </tr>
                                     <tr>
+                                        <td> <input name="pid" id="productId" class="form-control"> </td>
                                         <td>
                                             <div class="form-group">
-                                                <input list="productList" name="productName" id="selectedName" class="form-control">
-                                                <datalist id="productList">
+                                                <input list="sizeList" name="size" id="selectedSize" class="form-control">
+                                                <datalist id="sizeList">
                                                  <option value="">
  
                                             </datalist>
@@ -133,8 +138,8 @@
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input list="productList" name="productName" id="selectedType" class="form-control">
-                                                <datalist id="productList">
+                                                <input list="typeList" name="type" id="selectedType" class="form-control">
+                                                <datalist id="typeList">
                                                  <option value="">
  
                                             </datalist>
@@ -142,8 +147,8 @@
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input list="productList" name="productName" id="selectedSize" class="form-control">
-                                                <datalist id="productList">
+                                                <input list="gradeList" name="grade" id="selectedGrade" class="form-control">
+                                                <datalist id="gradeList">
                                                  <option value="">
  
                                             </datalist>
@@ -151,8 +156,26 @@
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input list="productList" name="productName" id="selectedGrade" class="form-control">
-                                                <datalist id="productList">
+                                                <input list="nameList" name="name" id="selectedName" class="form-control">
+                                                <datalist id="nameList">
+                                                 <option value="">
+ 
+                                            </datalist>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input list="shadeList" name="shade" id="selectedShade" class="form-control">
+                                                <datalist id="shadeList">
+                                                 <option value="">
+ 
+                                            </datalist>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input list="batchList" name="batch" id="selectedBatch" class="form-control">
+                                                <datalist id="batchList">
                                                  <option value="">
  
                                             </datalist>

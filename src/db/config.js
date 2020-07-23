@@ -15,7 +15,7 @@ let db = new sqlite3.Database("./electron-billing.db", async(err) => {
     //creating transaction table
     await db.run("CREATE TABLE IF NOT EXISTS transactions (id INTEGER PRIMARY KEY,type TEXT NOT NULL,payment TEXT NOT NULL,onDate DATE NOT NULL,personID INTEGER NOT NULL,netAmt NUMBER NOT NULL,taxAmt NUMBER,insuranceAmt NUMBER,grossAmt NUMBER NOT NULL)");
     //creating transaction details Table
-    await db.run("CREATE TABLE IF NOT EXISTS transactionDetail (id INTEGER PRIMARY KEY,transactionId INTEGER NOT NULL,productId INTEGER NOT NULL,quantity INTEGER NOT NULL,amount NUMBER NOT NULL)");
+    await db.run("CREATE TABLE IF NOT EXISTS transactionDetail (id INTEGER PRIMARY KEY,transactionId INTEGER NOT NULL,productId INTEGER NOT NULL,batchNo TEXT,quantity INTEGER NOT NULL,amount NUMBER NOT NULL)");
     //creating Paymetn Recipt table
     await db.run("CREATE TABLE IF NOT EXISTS paymentRecipt (id INTEGER PRIMARY KEY,onDate DATE NOT NULL,personId INTEGER NOT NULL,amount NUMBER NOT NULL,remark TEXT)");
     //creating inventory table
