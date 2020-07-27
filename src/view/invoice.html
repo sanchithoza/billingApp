@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello !</title>
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" href="./../css/dropdown.css" />
+    <link rel="stylesheet" href="./../css/transaction.css" />
+    <link rel="stylesheet" href="./../css/bootstrap.min.css" />
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row border">
+            <div class="col-md-12 text-center" id="companyDetail">
+                <h3 id="companyName">Riddhi Siddhi Ceramic</h3>
+                <h6 id="companyAddress">Address</h6>
+                <h6 id="companyContactNo">ContactNo</h6>
+                <h6><span id="companyGstNo">GST:</span><span id="companyPanNo">PAN:</span></h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 border" id="partyDetail">
+                <h5 id="partyName"></h5>
+                <span id="partyAddress"></span><br>
+                <span id="partyState"></span>
+            </div>
+            <div class="col-md-6 border" id="invoiceDetail">
+                <h5 id="invoiceNo">Invoice No : RS/</h5>
+                <span id="invoiceDate">Date : </span><br>
+                <span id="paymentMode">Payment Mode : </span>
+            </div>
+        </div>
+        <div class="row border text-center">
+            <table class="table">
+                <thead>
+                    <tr id="items">
+                        <td>SrNo</td>
+                        <td>Size</td>
+                        <td>Name</td>
+                        <td>Type</td>
+                        <td>Batch</td>
+                        <td>Shade</td>
+                        <td>Quality</td>
+                        <td>Qty</td>
+                        <td>Amount</td>
+                    </tr>
+                </thead>
+                <tbody id="products">
+                </tbody>
+                <tr id="items">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td id="totalQty"></td>
+                    <td id="totalAmt"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="row border text-center">
+            <div class="col-md-5"></div>
+            <div class="col-md-7">
+                <table class="table" style="font-size: smaller;">
+                    <thead>
+                        <tr>
+                            <td>Tax Rate</td>
+                            <td>Taxable Amount</td>
+                            <td>CGST</td>
+                            <td>SGST</td>
+                            <td>Total Tax</td>
+                            <td>Total Amount</td>
+                        </tr>
+                    </thead>
+                    <tbody id="amountCalculated">
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <div class="row" style="font-size: smaller;">
+            <div class="col-md-6 border">
+                <h6>terms & conditions:</h6>
+                <ol>
+                    <li>one</li>
+                    <li>two</li>
+                </ol>
+            </div>
+            <div class="col-md-6 border text-right">
+                For Riddhi Siddhi Ceramic
+                <br><br><br> Authorized Signatiory
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="./../js/jquery-3.5.1.js"></script>
+
+<script type="text/javascript" src="./../js/invoice.js"></script>
+<script type="text/javascript" src="./../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./../js/dropdown.js"></script>
+
+</html>

@@ -9,7 +9,6 @@ $(function() {
     //$("#billItems tbody").append(productTableRow);
 
     $("#addRow").on('click', async function() {
-        console.log("here");
         let productTableRow = '<tr> <td> <input name="pid" id="productId" class="form-control"> </td> <td> <div class="form-group"> <input list="sizeList" name="size" id="selectedSize" class="form-control"> <datalist id="sizeList"> <option value=""> </datalist> </div> </td> <td> <div class="form-group"> <input list="typeList" name="type" id="selectedType" class="form-control"> <datalist id="typeList"> <option value=""> </datalist> </div> </td> <td> <div class="form-group"> <input list="gradeList" name="grade" id="selectedGrade" class="form-control"> <datalist id="gradeList"> <option value=""> </datalist> </div> </td> <td> <div class="form-group"> <input list="nameList" name="name" id="selectedName" class="form-control"> <datalist id="nameList"> <option value=""> </datalist> </div> </td> <td> <div class="form-group"> <input list="shadeList" name="shade" id="selectedShade" class="form-control"> <datalist id="shadeList"> <option value=""> </datalist> </div> </td> <td> <div class="form-group"> <input list="batchList" name="batch" id="selectedBatch" class="form-control"> <datalist id="batchList"> <option value=""> </datalist> </div> </td> <td><input type="text" name="tableName" class="form-control tabName" id="qty" /></td> <td><input type="text" name="tableName" class="form-control tabName" id="rate" /></td> <td><input type="text" name="tableName" class="form-control tabName" id="mrp" /></td> </tr>';
         $("#billItems tbody").append(productTableRow);
     });
@@ -114,30 +113,42 @@ $(function() {
         let tax = parseFloat($('#sgst').text()) + parseFloat($('#cgst').text());
         let netAmount = $('#namount').text();
         let grossAmount = $('#gamount').text();
+        let tId;
         db.run("INSERT INTO transactions(type,payment,onDate,personId,netAmt,taxAmt,insuranceAmt,grossAmt) VALUES(?,?,?,?,?,?,?,?)", [transactionType, paymentMode, transdate, partyId, netAmount, tax, '0', grossAmount], function(err) {
             if (err) {
                 console.log(err);
                 return $('#result').text(err);
             }
-
-            $('#result').text(`data inserted ${this.lastID}`);
-        });
-        var item_array = [];
-        $("#billItems tbody tr").each(function(index) {
-            if ($(this).find('input#selectedName').val()) {
-                item_array.push({
-                    "name": $(this).find('input#selectedName').val(),
-                    "type": $(this).find('input#selectedType').val(),
-                    "size": $(this).find('input#selectedSize').val(),
-                    "grade": $(this).find('input#selectedGrade').val(),
-                    "qty": $(this).find('input#qty').val(),
-                    "rate": $(this).find('input#rate').val(),
-                    "mrp": $(this).find('input#mrp').val()
+            tId = this.lastID;
+            var item_array = [];
+            $("#billItems tbody tr").each(function(index) {
+                if ($(this).find('input#selectedName').val()) {
+                    item_array.push({
+                        // "name": $(this).find('input#selectedName').val(),
+                        //"type": $(this).find('input#selectedType').val(),
+                        //"size": $(this).find('input#selectedSize').val(),
+                        //"grade": $(this).find('input#selectedGrade').val(),
+                        "pId": $(this).find('input#productId').val(),
+                        "batchNo": $(this).find('input#selectedBatch').val(),
+                        "qty": $(this).find('input#qty').val(),
+                        "mrp": $(this).find('input#mrp').val()
+                    });
+                }
+            });
+            item_array.forEach((element, index) => {
+                console.log(index, element.pId, tId);
+                db.run("INSERT INTO transactionDetail(transactionId,productId,batchNo,quantity,amount) VALUES(?,?,?,?,?)", [tId, element.pId, element.batchNo, element.qty, element.mrp], function(err) {
+                    if (err) {
+                        return $('#result').text(err);
+                    }
+                    $('#result').text("data inserted", this.lastID);
+                    window.location = `invoice.html?tid=${tId}`;
                 });
-            }
+            });
+
         });
 
-        console.log("array", item_array);
+
 
     });
 });
