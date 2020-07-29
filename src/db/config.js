@@ -9,7 +9,7 @@ let db = new sqlite3.Database("./electron-billing.db", async(err) => {
     //creating User table
     await db.run("CREATE TABLE IF NOT EXISTS appuser (id INTEGER PRIMARY KEY,username TEXT NOT NULL,password TEXT NOT NULL)");
     //creating product master table
-    await db.run("CREATE TABLE IF NOT EXISTS product (id INTEGER PRIMARY KEY,name TEXT,type TEXT NOT NULL,grade TEXT NOT NULL,size TEXT NOT NULL,shade TEXT)");
+    await db.run("CREATE TABLE IF NOT EXISTS product (id INTEGER PRIMARY KEY,name TEXT,type TEXT NOT NULL,grade TEXT NOT NULL,size TEXT NOT NULL,shade TEXT,pcsPerBox TEXT NOT NULL)");
     //creating person master
     await db.run("CREATE TABLE IF NOT EXISTS person (id INTEGER PRIMARY KEY,type TEXT NOT NULL,name TEXT NOT NULL,address TEXT NOT NULL,state TEXT NOT NULL,gst TEXT,pan TEXT)");
     //creating transaction table

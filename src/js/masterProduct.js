@@ -14,7 +14,8 @@ $('#submit').on('click', () => {
     let grade = $('#grade').val();
     let size = $('#size').val();
     let shade = $('#shade').val();
-    db.run("INSERT INTO product(name,type,grade,size,shade) VALUES(?,?,?,?,?)", [name, type, grade, size, shade], function(err) {
+    let pcsPerBox = $('#pcsPerBox').val();
+    db.run("INSERT INTO product(name,type,grade,size,shade,pcsPerBox) VALUES(?,?,?,?,?,?)", [name, type, grade, size, shade, pcsPerBox], function(err) {
         if (err) {
             return console.log(err);
         }

@@ -1,6 +1,15 @@
 const $ = require('jquery');
 const db = require('./../db/config');
 const { Callbacks } = require('jquery');
+document.addEventListener('DOMContentLoaded', pageLoaded);
+let transType;
+
+function pageLoaded() {
+    let urlParams = getUrlParams(location.search);
+    transType = urlParams.type;
+    $('#transactionHeader').append(`${transType} Entry`)
+
+}
 
 
 $(function() {
@@ -13,6 +22,7 @@ $(function() {
         $("#billItems tbody").append(productTableRow);
     });
     $(document.body).on('blur', '#billItems tbody tr input#qty', async function() {
+
         await calculateTotalQty();
         await calculateRowMrp();
         await calculateNetAmount();
@@ -48,60 +58,81 @@ $(function() {
     */
     //size , type & grade datalists are populated from dropdown.js 
     //on grade change
-    $(document.body).on('input', '#billItems tbody tr input#selectedGrade', async function() {
+    $(document.body).on('input', '#billItems tbody tr input#selectedSize', async function() {
             let size = $(this).closest('tr').find('[name="size"]').val();
-            let type = $(this).closest('tr').find('[name="type"]').val();
-            let grade = $(this).closest('tr').find('[name="grade"]').val();
+            // let type = $(this).closest('tr').find('[name="type"]').val();
+            //let grade = $(this).closest('tr').find('[name="grade"]').val();
             let namelist = $(this).closest('tr').find("#nameList");
             namelist.empty();
             $(this).closest('tr').find('#selectedName').val('');
-            await db.each(`SELECT DISTINCT name FROM product WHERE (size = '${size}' AND type = '${type}' AND grade = '${grade}')`, function(err, row) {
-                namelist.append('<option value="' + row.name + '">');
+            //await db.each(`SELECT DISTINCT name FROM product WHERE (size = '${size}' AND type = '${type}' AND grade = '${grade}')`, function(err, row) {
+            await db.each(`SELECT name,pcsPerBox FROM product WHERE (size = '${size}')`, function(err, row) {
+                namelist.append('<option value="' + row.name + '" id = "' + row.pcsPerBox + '"></option');
             });
         })
         //on name change
     $(document.body).on('input', '#billItems tbody tr input#selectedName', async function() {
             let size = $(this).closest('tr').find('[name="size"]').val();
-            let type = $(this).closest('tr').find('[name="type"]').val();
-            let grade = $(this).closest('tr').find('[name="grade"]').val();
-            let name = $(this).closest('tr').find('[name="name"]').val();
-            let shadelist = $(this).closest('tr').find("#shadeList")
-            shadelist.empty();
-            $(this).closest('tr').find('#selectedShade').val('');
-            await db.each(`SELECT DISTINCT shade FROM product WHERE (size = '${size}' AND type = '${type}' AND grade = '${grade}' AND name = '${name}')`, function(err, row) {
-                shadelist.append('<option value="' + row.shade + '">');
-            });
-        })
-        //on shade change
-    $(document.body).on('input', '#billItems tbody tr input#selectedShade', async function() {
-            let size = $(this).closest('tr').find('[name="size"]').val();
-            let type = $(this).closest('tr').find('[name="type"]').val();
-            let grade = $(this).closest('tr').find('[name="grade"]').val();
-            let name = $(this).closest('tr').find('[name="name"]').val();
-            let shade = $(this).closest('tr').find('[name="shade"]').val();
+            //let type = $(this).closest('tr').find('[name="type"]').val();
+            //let grade = $(this).closest('tr').find('[name="grade"]').val();
             let pId = $(this).closest('tr').find('[name="pid"]');
+            let name = $(this).closest('tr').find('[name="name"]').val();
             let batchlist = $(this).closest('tr').find("#batchList")
             batchlist.empty();
             $(this).closest('tr').find('#selectedBatch').val('');
-            await db.all(`SELECT id FROM product WHERE (size = '${size}' AND type = '${type}' AND grade = '${grade}' AND name = '${name}' AND shade='${shade}')`, async function(err, row) {
+            await db.all(`SELECT id,pcsPerBox FROM product WHERE (size = '${size}' AND name = '${name}')`, async function(err, row) {
                 // make entry in inventory on purchase
                 await pId.val(row[0].id);
                 let productId = row[0].id;
-                await db.each(`SELECT DISTINCT batchNo FROM inventory WHERE (productId = '${productId}')`, function(err, row) {
-                    if (row) {
-                        batchlist.append('<option value="' + row.batchNo + '">');
-                    }
-                });
+                if (transType != "Purchase") {
+                    await db.each(`SELECT batchNo,availStock FROM inventory WHERE (productId = '${productId}')`, function(err, row) {
+                        if (row) {
+                            batchlist.append('<option value="' + row.batchNo + '" id="' + row.availStock + '">' + row.availStock + '</option>');
+                        }
+                    });
+                }
             });
+            // shadelist.empty();
+            // $(this).closest('tr').find('#selectedShade').val('');
+            // await db.each(`SELECT DISTINCT shade FROM product WHERE (size = '${size}' AND type = '${type}' AND grade = '${grade}' AND name = '${name}')`, function(err, row) {
+            //     shadelist.append('<option value="' + row.shade + '">');
+            // });
         })
-        //on batch change
+        //on shade change
+        // $(document.body).on('input', '#billItems tbody tr input#selectedShade', async function() {
+        //         let size = $(this).closest('tr').find('[name="size"]').val();
+        //         let type = $(this).closest('tr').find('[name="type"]').val();
+        //         let grade = $(this).closest('tr').find('[name="grade"]').val();
+        //         let name = $(this).closest('tr').find('[name="name"]').val();
+        //         let shade = $(this).closest('tr').find('[name="shade"]').val();
+        //         let pId = $(this).closest('tr').find('[name="pid"]');
+        //         let batchlist = $(this).closest('tr').find("#batchList")
+        //         batchlist.empty();
+        //         $(this).closest('tr').find('#selectedBatch').val('');
+        //         await db.all(`SELECT id FROM product WHERE (size = '${size}' AND type = '${type}' AND grade = '${grade}' AND name = '${name}' AND shade='${shade}')`, async function(err, row) {
+        //             // make entry in inventory on purchase
+        //             await pId.val(row[0].id);
+        //             let productId = row[0].id;
+        //             await db.each(`SELECT DISTINCT batchNo FROM inventory WHERE (productId = '${productId}')`, function(err, row) {
+        //                 if (row) {
+        //                     batchlist.append('<option value="' + row.batchNo + '">');
+        //                 }
+        //             });
+        //         });
+        //     })
+        //     //on batch change
     $(document.body).on('input', '#billItems tbody tr input#selectedBatch', async function() {
         let productId = $(this).closest('tr').find('input#productId').val();
         let batch = $(this).closest('tr').find('[name="batch"]').val();
         let qty = $(this).closest('tr').find('input#qty');
+        let pcs = $(this).closest('tr').find('input#pcs');
+        let pcsPerBox = $("#nameList option[value='" + $('#selectedName').val() + "']").attr('id');
+
         await db.all(`SELECT availStock FROM inventory WHERE (batchNo = '${batch}' AND productId = '${productId}')`, async function(err, row) {
             qty.val(await row[0].availStock);
+            pcs.val(await (row[0].availStock * pcsPerBox));
         });
+
     });
 
     $(document.body).on('click', '#submit', () => {
@@ -131,18 +162,35 @@ $(function() {
                         "pId": $(this).find('input#productId').val(),
                         "batchNo": $(this).find('input#selectedBatch').val(),
                         "qty": $(this).find('input#qty').val(),
-                        "mrp": $(this).find('input#mrp').val()
+                        "mrp": $(this).find('input#mrp').val(),
+                        "rate": $(this).find('input#rate').val()
                     });
                 }
             });
             item_array.forEach((element, index) => {
                 console.log(index, element.pId, tId);
-                db.run("INSERT INTO transactionDetail(transactionId,productId,batchNo,quantity,amount) VALUES(?,?,?,?,?)", [tId, element.pId, element.batchNo, element.qty, element.mrp], function(err) {
+                db.run("INSERT INTO transactionDetail(transactionId,productId,batchNo,quantity,amount) VALUES(?,?,?,?,?)", [tId, element.pId, element.batchNo, element.qty, element.mrp], async function(err) {
                     if (err) {
                         return $('#result').text(err);
                     }
+                    if (transType == 'Purchase') {
+                        console.log();
+                        db.get(`SELECT * FROM inventory WHERE batchNo = ${element.batchNo}`, async function(err, row) {
+                            console.log(err);
+                            if (row) {
+                                console.log("exists");
+                            }
+                        })
+                        db.run("INSERT INTO inventory(productId,batchNo,availStock,rate) VALUES(?,?,?,?)", [element.pId, element.batchNo, element.qty, element.rate], async function(err) {
+                            if (err) {
+                                return $('#result').text(err);
+                            }
+                        })
+                    } else if (transType == 'Sales') {
+
+                    }
                     $('#result').text("data inserted", this.lastID);
-                    window.location = `invoice.html?tid=${tId}`;
+                    //window.location = `invoice.html?tid=${tId}`;
                 });
             });
 
@@ -154,15 +202,6 @@ $(function() {
 });
 
 //const { childWin } = require('./../../main')
-document.addEventListener('DOMContentLoaded', pageLoaded);
-let transType;
-
-function pageLoaded() {
-    let urlParams = getUrlParams(location.search);
-    transType = urlParams.type;
-    $('#transactionHeader').append(`${transType} Entry`)
-
-}
 
 function getUrlParams(urlOrQueryString) {
     if ((i = urlOrQueryString.indexOf('?')) >= 0) {
@@ -197,10 +236,13 @@ function _mapUrlParams(queryString) {
 
 
 function calculateRowMrp() {
+
     $("#billItems tbody tr").each(function(index) {
+        let pcsPerBox = $("#nameList option[value='" + $('#selectedName').val() + "']").attr('id');
         let qty = parseFloat($(this).find('input#qty').val()) || 0;
         let rate = parseFloat($(this).find('input#rate').val()) || 0;
         $(this).find('input#mrp').val(qty * rate)
+        $(this).find('input#pcs').val(qty * pcsPerBox)
     });
 }
 

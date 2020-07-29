@@ -52,16 +52,17 @@
                             <table class="table" id="billItems">
                                 <thead>
                                     <tr>
-                                        <th>PID</th>
-                                        <th>Size</th>
-                                        <th>Type</th>
-                                        <th>Grade</th>
+                                        <th style="width: 5%;">PID</th>
+                                        <th style="width: 15%;">Size</th>
+                                        <!-- <th>Type</th> -->
                                         <th>Name</th>
-                                        <th>Shade</th>
+                                        <!-- <th>Shade</th>-->
                                         <th>Batch</th>
-                                        <th>Qty</th>
-                                        <th>Rate</th>
-                                        <th>MRP</th>
+                                        <!-- <th>Grade</th> -->
+                                        <th style="width: 10%;">Qty</th>
+                                        <th style="width: 10%;">Pcs</th>
+                                        <th style="width: 10%;">Rate</th>
+                                        <th style="width: 10%;">MRP</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -76,7 +77,7 @@
                                             </datalist>
                                             </div>
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             <div class="form-group">
                                                 <input list="typeList" name="type" id="selectedType" class="form-control">
                                                 <datalist id="typeList">
@@ -84,16 +85,8 @@
  
                                             </datalist>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input list="gradeList" name="grade" id="selectedGrade" class="form-control">
-                                                <datalist id="gradeList">
-                                                 <option value="">
- 
-                                            </datalist>
-                                            </div>
-                                        </td>
+                                        </td> -->
+
                                         <td>
                                             <div class="form-group">
                                                 <input list="nameList" name="name" id="selectedName" class="form-control">
@@ -103,7 +96,7 @@
                                             </datalist>
                                             </div>
                                         </td>
-                                        <td>
+                                        <!--<td>
                                             <div class="form-group">
                                                 <input list="shadeList" name="shade" id="selectedShade" class="form-control">
                                                 <datalist id="shadeList">
@@ -111,7 +104,7 @@
  
                                             </datalist>
                                             </div>
-                                        </td>
+                                        </td>-->
                                         <td>
                                             <div class="form-group">
                                                 <input list="batchList" name="batch" id="selectedBatch" class="form-control">
@@ -121,31 +114,7 @@
                                             </datalist>
                                             </div>
                                         </td>
-                                        <td><input type="text" name="tableName" class="form-control tabName" id="qty" /></td>
-                                        <td><input type="text" name="tableName" class="form-control tabName" id="rate" /></td>
-                                        <td><input type="text" name="tableName" class="form-control tabName" id="mrp" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <input name="pid" id="productId" class="form-control"> </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input list="sizeList" name="size" id="selectedSize" class="form-control">
-                                                <datalist id="sizeList">
-                                                 <option value="">
- 
-                                            </datalist>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input list="typeList" name="type" id="selectedType" class="form-control">
-                                                <datalist id="typeList">
-                                                 <option value="">
- 
-                                            </datalist>
-                                            </div>
-                                        </td>
-                                        <td>
+                                        <!-- <td>
                                             <div class="form-group">
                                                 <input list="gradeList" name="grade" id="selectedGrade" class="form-control">
                                                 <datalist id="gradeList">
@@ -153,35 +122,9 @@
  
                                             </datalist>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input list="nameList" name="name" id="selectedName" class="form-control">
-                                                <datalist id="nameList">
-                                                 <option value="">
- 
-                                            </datalist>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input list="shadeList" name="shade" id="selectedShade" class="form-control">
-                                                <datalist id="shadeList">
-                                                 <option value="">
- 
-                                            </datalist>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input list="batchList" name="batch" id="selectedBatch" class="form-control">
-                                                <datalist id="batchList">
-                                                 <option value="">
- 
-                                            </datalist>
-                                            </div>
-                                        </td>
+                                        </td> -->
                                         <td><input type="text" name="tableName" class="form-control tabName" id="qty" /></td>
+                                        <td><input type="text" name="tableName" class="form-control tabName" id="pcs" /></td>
                                         <td><input type="text" name="tableName" class="form-control tabName" id="rate" /></td>
                                         <td><input type="text" name="tableName" class="form-control tabName" id="mrp" /></td>
                                     </tr>
