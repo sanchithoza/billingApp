@@ -9,7 +9,7 @@ $(async function() {
         $("#productList").append('<option value="' + row.name + '">');
     });
     await db.each("SELECT DISTINCT size FROM product", function(err, row) {
-        $("#sizeList").append('<option value="' + row.size + '">');
+        $(".sizeList").append('<option value="' + row.size + '">');
     });
     await db.each("SELECT DISTINCT type FROM product", function(err, row) {
         $("#typeList").append('<option value="' + row.type + '">');
