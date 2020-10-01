@@ -112,27 +112,26 @@ $(function() {
         transactionData.transactionInfo = transactionInfo;
         transactionData.item_array = [];
         transactionData = await prepairItemArray(transactionData);
-        console.log(transactionData);
+        console.log(transactionData.transactionInfo.totalRow);
         transactionData.item_array.forEach(element => {
             console.log("ele", element);
         });
-
-        if (transactionData.transactionInfo.partyId && transactionData.item_array[0]) {
+        console.log(transactionData);
+        if (transactionData.transactionInfo.partyId && transactionData.item_array.length == transactionData.transactionInfo.totalRow) {
             let transactionId = await addTransaction(transactionData.transactionInfo);
-
-            console.log(transactionId);
+            transactionData.transactionInfo.transactionId = transactionId;
+            // console.log(transactionId);
+            if (transactionId && transactionData.transactionInfo.transactionType == "Purchase") {
+                let status = await addPurchaseTransaction(transactionData);
+            } else if (transactionId && transactionData.transactionInfo.transactionType == "Sale") {
+                let salesStatus = await addSalesTransaction(transactionData)
+            }
         } else {
             console.log("show alert");
         }
 
         /*  if (transType == "Purchase") {
               item_array.forEach(async(element) => {
-                  await db.get(`SELECT * FROM inventory WHERE batchNo = "${element.batchNo}"`, async function(err, row) {
-                      if (err) {
-                          console.log("checking for batchno", err);
-                      }
-                      if (!row) {
-                          console.log(element.pId, tId);
                           await db.run("INSERT INTO transactionDetail(transactionId,productId,batchNo,quantity,amount) VALUES(?,?,?,?,?)", [tId, element.pId, element.batchNo, element.qty, element.mrp], async function(err) {
                               if (err) {
                                   return console.log("error adding purchase in transaction detail", err);
@@ -200,20 +199,72 @@ async function addTransaction(data) {
                 console.log(err);
                 return false;
             }
+            console.log("transaction Added with id : ", this.lastID);
             resolve(this.lastID);
         });
     })
 }
 
+async function addPurchaseTransaction(transactionData) {
+    console.log(transactionData.transactionInfo.transactionId);
+    let records = transactionData.item_array;
+    return new Promise(async(resolve) => {
+        records.forEach(async(element) => {
+            await db.run("INSERT INTO transactionDetail(transactionId,productId,batchNo,quantity,amount) VALUES(?,?,?,?,?)", [transactionData.transactionInfo.transactionId, element.pId, element.batchNo, element.qty, element.mrp], async function(err) {
+                if (err) {
+                    return console.log("error adding purchase in transaction detail", err);
+                }
+                console.log("transaction detail added ");
+                await db.run("INSERT INTO inventory(productId,batchNo,availStock,rate,mrp) VALUES(?,?,?,?,?)", [element.pId, element.batchNo, element.qty, element.rate, element.mrp], async function(err) {
+                    if (err) {
+                        return console.log("error adding purchase in inventory", err);
+                    }
+                    console.log("Entered in Inventory");
+                })
+            })
+
+        });
+        console.log("Purchase Entry Completed");
+
+    })
+}
+async function addSalesTransaction(transactionData) {
+    console.log(transactionData.transactionInfo.transactionId);
+    let records = transactionData.item_array;
+    return new Promise(async(resolve) => {
+        records.forEach(async(element) => {
+            await db.run("UPDATE inventory SET availStock = availStock - ? WHERE (productId = ? AND batchNo = ?)", [element.qty, element.pId, element.batchNo], async function(err) {
+                if (err) {
+                    return console.log("error Updating sales in inventory", err);
+                }
+                console.log("updated Inventory");
+                await db.run("INSERT INTO transactionDetail(transactionId,productId,batchNo,quantity,amount) VALUES(?,?,?,?,?)", [transactionData.transactionInfo.transactionId, element.pId, element.batchNo, element.qty, element.mrp], async function(err) {
+                    if (err) {
+                        return console.log("error adding purchase in transaction detail", err);
+                    }
+                    console.log("transaction detail added ");
+                })
+            })
+
+        });
+        console.log("Sales Entry Completed");
+
+    })
+}
+
 function prepairItemArray(transactionData) {
     let transactionInfo = transactionData.transactionInfo;
+    let totalRow = 0;
     return new Promise(resolve => {
         $("#billItems tbody tr").each(async function(index) {
+
             if (transactionInfo.partyId && $(this).find('.productId').val()) {
+                totalRow = totalRow + 1;
                 var batchStatus;
                 if (transactionInfo.transactionType == "Purchase") {
                     batchStatus = await checkBatchNumber($(this).find(".selectedBatch").val());
                 }
+                console.log(batchStatus);
                 if (!batchStatus) {
                     transactionData.item_array.push({
                         "pId": $(this).find('input.productId').val(),
@@ -224,11 +275,12 @@ function prepairItemArray(transactionData) {
                     });
                 } else {
                     transactionData.item_array = [];
-                    return false;
+
                 }
             }
         });
         setTimeout(() => {
+            transactionInfo.totalRow = totalRow;
             resolve(transactionData);
         }, 1000);
 
@@ -243,8 +295,10 @@ function checkBatchNumber(batchNo) {
                     buttons: ["OK"],
                     message: `${batchNo} already exists`
                 })
+
                 console.log(response);
-                // throw new FatalError("Batch Already Exists!");
+
+                throw new FatalError("Batch Already Exists!");
             } else {
                 resolve(row);
             }

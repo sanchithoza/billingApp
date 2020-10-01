@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello World!</title>
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" href="./../css/dropdown.css" />
+    <link rel="stylesheet" href="./../css/transaction.css" />
+    <link rel="stylesheet" href="./../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./../css/jquery.dataTables.min.css" />
+
+</head>
+
+<body>
+    <from>
+        <div class="card">
+            <div class="card-header" id="transactionHeader"></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="name">Party Name:</label>
+                        <input list="partyList" name="partyName" id="selectedParty" class="form-control">
+                        <datalist id="partyList">
+                            <option value="">
+ 
+                        </datalist>
+                    </div>
+
+
+                    <div class="form-group col-md-3">
+                        <label for="paymentMode">Payment Mode:</label>
+                        <select class="form-control" id="paymentMode">
+                          <option value="cash">Cash</option>
+                          <option value="credit">Credit</option>
+                          </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="date">Date:</label>
+                        <input type="date" name="transdate" class="form-control" id="transdate" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card col-md-12">
+                        <div class="card-header" id="">Product List
+                            <a id="addRow">add Row</a>
+                        </div>
+                        <div class="card-body">
+                            <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <br />
+    </from>
+</body>
+
+
+
+<!--<script type="text/javascript" src="./../js/jquery-3.5.1.js"></script>-->
+<script type="text/javascript">
+    const $ = require('jquery');
+</script>
+<script type="text/javascript" src="./../js/bootstrap.min.js"></script>
+<!--<script type="text/javascript" src="./../js/jquery.dataTables.min.js"></script>-->
+<script type="text/javascript" src="./../js/report.js"></script>
+<script type="text/javascript" src="./../js/dropdown.js"></script>
+
+</html>

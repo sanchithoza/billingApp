@@ -12,6 +12,8 @@
     "author": "Sanchit Oza",
     "license": "ISC",
     "dependencies": {
+        "datatables.net": "^1.10.22",
+        "datatables.net-dt": "^1.10.22",
         "electron": "^9.0.5",
         "jquery": "^3.5.1",
         "sqlite3": "^4.2.0"

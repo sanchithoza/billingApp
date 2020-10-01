@@ -105,13 +105,13 @@ function createWindow() {
             submenu: [{
                     label: "Sales Record",
                     click() {
-                        win.loadFile("src/view/repSales.html");
+                        win.loadURL(`file://${__dirname}/src/view/report.html?type=Sale`);
                     },
                 },
                 {
                     label: "Purchase Record",
                     click() {
-                        win.loadFile("src/view/repPurchase.html");
+                        win.loadURL(`file://${__dirname}/src/view/report.html?type=Purchase`);
                     },
                 },
                 {
