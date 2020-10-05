@@ -1,16 +1,25 @@
-const $ = require('jquery');
 const { dialog } = require('electron').remote;
 
 
 const db = require('./../db/config');
 const { Callbacks } = require('jquery');
 document.addEventListener('DOMContentLoaded', pageLoaded);
-let transType;
+let transType, transId;
 
-
-function pageLoaded() {
+async function pageLoaded() {
     let urlParams = getUrlParams(location.search);
     transType = urlParams.type;
+    transId = urlParams.tid;
+    if (transId) {
+        console.log(transId);
+        await db.all(`SELECT * FROM transactions WHERE  id = '${transId}'`, async function(err, row) {
+            console.log(row);
+            await db.each(`SELECT * FROM transactionDetail WHERE transactionId = '${transId}'`, async function(err, row) {
+                console.log(row);
+            })
+        })
+    }
+    //console.log(urlParams);
     $('#transactionHeader').append(`${transType} Entry`)
 
     for (let index = 0; index < 6; index++) {

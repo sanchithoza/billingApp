@@ -3,6 +3,7 @@ var dt = require('datatables.net')();
 var buttons = require('datatables.net-dt')();
 //const { dialog } = require('electron').remote;
 const db = require('./../db/config');
+const { dialog } = require('electron').remote;
 //const { Callbacks } = require('jquery');
 
 let transType;
@@ -19,6 +20,7 @@ $(async function() {
         $('#example').DataTable({
             data: data1,
             columns: [
+                { title: "View" },
                 { title: "Id" },
                 { title: "Date" },
                 { title: "Party" },
@@ -65,12 +67,13 @@ async function fillRecord(type) {
         let name = await getPerson(row.personID);
         console.log(name);
         let rowArray = [];
+        rowArray.push(`<a id="view_${row.id}" class="editor_edit" href="javascript:viewRecord(${row.id});">View</a>`)
         rowArray.push(row.id);
         rowArray.push(row.onDate);
         rowArray.push(name);
         rowArray.push(row.payment);
         rowArray.push(row.grossAmt);
-        rowArray.push(`<a href="" class="editor_edit">Edit</a> / <a href="" class="editor_remove">Delete</a>`)
+        rowArray.push(`<a id="edit_${row.id}" class="editor_edit" href="javascript:editRecord(${row.id});">Edit</a> / <a class="editor_remove"  href="javascript:deleteRecord(${row.id});">Delete</a>`)
         data.push(rowArray)
 
         /*   $row =   $('#records').append(`<tr> <td>${row.id}</td><td>${row.onDate} </td><td>${row.personID} </td><td>${row.payment} </td><td>${row.grossAmt} </td></tr>`);
@@ -86,6 +89,44 @@ async function fillRecord(type) {
     });
     console.log(data);
     return data;
+}
+
+function editRecord(id) {
+    console.log(id);
+    window.location = `transaction.html?tid=${id}&type=${transType}`;
+}
+
+async function deleteRecord(id) {
+    console.log(id);
+    let response = dialog.showMessageBoxSync({
+        buttons: ["YES", "NO"],
+        message: `${id} Delete ????`
+    })
+
+    console.log(response);
+    if (response == 0) {
+        await db.run(`DELETE FROM transactionDetail WHERE transactionId=?`, id, async function(err) {
+
+            if (err) {
+                return console.error(err.message);
+            }
+            await db.run(`DELETE FROM transactions WHERE id=?`, id, async function(err) {
+                if (err) {
+                    return console.error(err.message);
+                }
+                console.log(`Row(s) deleted ${this.changes}`);
+                location.reload()
+            })
+
+        });
+    } else {
+
+    }
+}
+
+function viewRecord(id) {
+    console.log(`view ${id}`);
+    window.location = `invoice.html?tid=${id}`;
 }
 
 function getPerson(personID) {
