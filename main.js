@@ -11,7 +11,7 @@ function createWindow() {
         //height: 600,
         show: false,
         webPreferences: {
-            nodeIntegration: true,
+            nodeIntegration: true
         },
     });
     win.maximize();
@@ -115,9 +115,9 @@ function createWindow() {
                     },
                 },
                 {
-                    label: "Partywise Record",
+                    label: "Stock Details",
                     click() {
-                        win.loadFile("src/view/repPartywise.html");
+                        win.loadURL(`file://${__dirname}/src/view/report.html?type=Stock`);
                     },
 
                 },

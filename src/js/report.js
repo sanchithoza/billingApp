@@ -13,23 +13,43 @@ $(async function() {
     transType = urlParams.type;
     console.log(transType);
     $('#transactionHeader').append(`${transType} Records`)
-    data1 = await fillRecord(transType);
+    if (transType == "Stock") {
+        console.log("in");
+        data1 = await getStock();
+        setTimeout(() => {
+            console.log(data1);
+            $('#example').DataTable({
+                data: data1,
+                columns: [
+                    { title: "View" },
+                    { title: "Id" },
+                    { title: "Product Name" },
+                    { title: "Batch" },
+                    { title: "Available Stock" },
 
-    setTimeout(() => {
-        console.log(data1);
-        $('#example').DataTable({
-            data: data1,
-            columns: [
-                { title: "View" },
-                { title: "Id" },
-                { title: "Date" },
-                { title: "Party" },
-                { title: "Mode" },
-                { title: "Gross Amount" },
-                { title: "Edit/Delete" },
-            ]
-        });
-    }, 1000);
+                    { title: "Edit/Delete" },
+                ]
+            });
+        }, 1000);
+    } else {
+        data1 = await fillRecord(transType);
+        setTimeout(() => {
+            console.log(data1);
+            $('#example').DataTable({
+                data: data1,
+                columns: [
+                    { title: "View" },
+                    { title: "Id" },
+                    { title: "Date" },
+                    { title: "Party" },
+                    { title: "Mode" },
+                    { title: "Gross Amount" },
+                    { title: "Edit/Delete" },
+                ]
+            });
+        }, 1000);
+    }
+
 
 });
 
@@ -74,18 +94,27 @@ async function fillRecord(type) {
         rowArray.push(row.payment);
         rowArray.push(row.grossAmt);
         rowArray.push(`<a id="edit_${row.id}" class="editor_edit" href="javascript:editRecord(${row.id});">Edit</a> / <a class="editor_remove"  href="javascript:deleteRecord(${row.id});">Delete</a>`)
+        data.push(rowArray);
+    });
+    console.log(data);
+    return data;
+}
+async function getStock() {
+    let data = [];
+    await db.each(`SELECT DISTINCT productId,id,batchNo,availStock FROM inventory GROUP BY productId`, async function(err, row) {
+        //console.log(row.id);
+        let name = await getProduct(row.productId);
+        console.log(name);
+        let rowArray = [];
+        rowArray.push(`<a id="view_${row.id}" class="editor_edit" href="javascript:viewRecord(${row.id});">View</a>`)
+        rowArray.push(row.id);
+        rowArray.push(name);
+        rowArray.push(row.batchNo);
+        rowArray.push(row.availStock);
+        //rowArray.push(row.grossAmt);
+        rowArray.push(`<a id="edit_${row.id}" class="editor_edit" href="javascript:editRecord(${row.id});">Edit</a> / <a class="editor_remove"  href="javascript:deleteRecord(${row.id});">Delete</a>`)
         data.push(rowArray)
 
-        /*   $row =   $('#records').append(`<tr> <td>${row.id}</td><td>${row.onDate} </td><td>${row.personID} </td><td>${row.payment} </td><td>${row.grossAmt} </td></tr>`);
-           
-         var table = $('#example').DataTable();
-           table.row.add({
-               "id": row.id,
-               "Date": row.onDate,
-               "Party": row.personID,
-               "Mode": row.payment,
-               "Gross Amount": row.grossAmt
-           }).draw();*/
     });
     console.log(data);
     return data;
@@ -132,6 +161,15 @@ function viewRecord(id) {
 function getPerson(personID) {
     return new Promise(async(resolve) => {
         await db.get(`SELECT name FROM person WHERE id = ${personID}`, async function name(err, row) {
+            resolve(row.name);
+        });
+    })
+
+}
+
+function getProduct(productId) {
+    return new Promise(async(resolve) => {
+        await db.get(`SELECT name FROM product WHERE id = ${productId}`, async function name(err, row) {
             resolve(row.name);
         });
     })
